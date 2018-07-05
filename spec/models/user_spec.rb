@@ -31,7 +31,7 @@ describe User do
   describe "when email format is invalid" do
     it 'should be invalid' do
       addresses = %W[user@foo,com user_at_foo.org example.user@foo.
-                     foo@bar_baz.com foo@bar+baz.com]
+                     foo@bar_baz.com foo@bar+baz.com foo@bar..com]
       addresses.each do |invalid_address|
         @user.email = invalid_address
         expect(@user).not_to be_valid
@@ -47,6 +47,16 @@ describe User do
       end
     end
   end
+
+ describe "email address with mixed keys" do
+   let(:mixed_keys_email) { 'FoB@Ar.CoM' }
+
+   it "should be save in low-case" do
+    @user.email = mixed_keys_email
+    @user.save
+     expect(@user.reload.email).to eq mixed_keys_email.downcase
+   end
+ end
 
   describe "when email address is already taken" do
     before do
@@ -71,7 +81,7 @@ describe User do
 
     describe "with valid password" do
       it 'should be equal found user' do
-        expect(found_user).to eq(found_user.authenticate(@user.password))
+        expect(@user).to eq(found_user.authenticate(@user.password))
       end
     end
     describe "with INvalid password" do
