@@ -5,7 +5,7 @@ describe "User pages" do
   subject { page }
 
   describe "SIgnup page" do
-    before {visit  users_path}
+    before {visit signup_path}
 
     it { should have_content('Sign up') }
     it { should have_title('Sign up') }
