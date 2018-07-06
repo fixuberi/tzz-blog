@@ -1,16 +1,14 @@
 require File.expand_path('../../config/environment', __FILE__)
 require 'rubygems'
 require 'database_cleaner'
+require 'factory_girl'
 ENV["RAILS_ENV"] ||= 'test'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-#require 'rspec/rails'
-#require 'rspec/autorun'
-#
+
  # Capybara integration
  require 'capybara/rspec'
  require 'capybara/rails'
 
-# See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -46,6 +44,12 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  # factory girl
+  config.before(:all) do
+    FactoryGirl.reload
+  end
+  config.include FactoryGirl::Syntax::Methods
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
   # have no way to turn it off -- the option exists only for backwards

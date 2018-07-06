@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resource :users
+  resources :users
 
 
   match '/signup', to: 'users#new', via: 'get'
