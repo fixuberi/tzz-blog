@@ -20,26 +20,27 @@ describe "User pages" do
         before { click_button submit }
 
         it { should have_title "Sign up" }
-        it { should have_content "error" }
+        it { should have_error_message }
       end
     end
 
     describe "with valid information" do
       before do
-          fill_in 'Name',         with: 'Petro'
-          fill_in 'Email',        with: 'foo@bar.com'
-          fill_in 'Password',     with: '123456'
-          fill_in 'Confirmation', with: '123456'
+        fill_in 'Name',         with: 'test'
+        fill_in 'Email',        with: 'foo@bar.com'
+        fill_in 'Password',     with: '123456'
+        fill_in 'Confirmation', with: '123456'
       end
       it "should create new user" do
         expect{ click_button submit }.to change(User, :count).by(1)
       end
       describe "after saving the user" do
         before { click_button submit }
-        let(:user) { User.find_by(email: 'foo@bar.com') }
+        let(:user) { User.find_by(email: "foo@bar.com") }
 
+        it { should have_link('Sign out') }
         it { should have_title(user.name) }
-        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { have_success_message 'Welcome' }
       end
 
     end
