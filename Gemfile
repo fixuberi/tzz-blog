@@ -9,6 +9,10 @@ gem 'pg'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'bootstrap-sass'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
+
+gem 'aws-sdk-s3'
+gem 'mini_magick'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets

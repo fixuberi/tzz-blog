@@ -28,13 +28,7 @@ describe "Authentication" do
 
       describe "followed by signout" do
         before { click_link "Sign out" }
-
-        it { should have_content "Sign in" }
-
-        it "should have link Sign in" do
-          pending "cant see link signin"
-          should have_link("Sign in", href:signin_path)
-        end
+        it { pending "cant see link";  should have_link("Sign in", href:signin_path) }
       end
     end
   end

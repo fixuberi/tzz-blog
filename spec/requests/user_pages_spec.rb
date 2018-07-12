@@ -30,6 +30,7 @@ describe "User pages" do
         fill_in 'Email',        with: 'foo@bar.com'
         fill_in 'Password',     with: '123456'
         fill_in 'Confirmation', with: '123456'
+        page.attach_file("Avatar", File.join(Rails.root, 'spec', 'support', 'ruby.png'))
       end
       it "should create new user" do
         expect{ click_button submit }.to change(User, :count).by(1)
@@ -40,17 +41,19 @@ describe "User pages" do
 
         it { should have_link('Sign out') }
         it { should have_title(user.name) }
-        it { have_success_message 'Welcome' }
+        it { should have_selector('div.alert.alert-success') }
       end
 
     end
   end
 
-  describe "profile page" do
+  describe "Profile page" do
     before { visit user_path(user) }
     let(:user) { FactoryGirl.create(:user) }
 
     it {should have_content(user.name) }
     it { should have_title(user.name) }
+    it { should have_selector('img[class="avatar"]')}
+
   end
 end
