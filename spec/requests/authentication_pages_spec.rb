@@ -1,6 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Authentication" do
+
+RSpec.describe "Authentication"  do
   subject { page }
 
   describe "sign in page" do
@@ -29,6 +30,24 @@ describe "Authentication" do
       describe "followed by signout" do
         before { click_link "Sign out" }
         it { pending "cant see link";  should have_link("Sign in", href:signin_path) }
+      end
+    end
+  end
+
+  describe "authorization", type: :request do
+    describe "for non-signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+
+      describe "in the Posts controller" do
+
+        describe "submitting to the create action" do
+          before { post posts_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submiting to the destroy action" do
+          before { delete post_path(FactoryGirl.create(:post)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
       end
     end
   end

@@ -97,4 +97,23 @@ describe User do
     before { @user.save }
     it { expect(@user.remember_token ).not_to be_blank }
   end
+
+ describe "post associations" do
+   before { @user.save }
+   let!(:older_post) { FactoryGirl.create(:post, user: @user, created_at: 1.day.ago) }
+   let!(:newer_post) { FactoryGirl.create(:post, user: @user, created_at: 1.hour.ago) }
+
+   it "should have right posts in right order" do
+     expect(@user.posts.to_a).to eq [newer_post, older_post]
+   end
+
+   it "should destroy associated posts" do
+     posts = @user.posts.to_a
+     @user.destroy
+     expect(posts).not_to  be_empty
+     posts.each do |post|
+       expect(Post.where(id: post.id)).to be_empty
+     end
+   end
+ end
 end

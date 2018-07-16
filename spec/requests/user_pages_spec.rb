@@ -48,12 +48,20 @@ describe "User pages" do
   end
 
   describe "Profile page" do
-    before { visit user_path(user) }
     let(:user) { FactoryGirl.create(:user) }
+    let!(:post1) { FactoryGirl.create(:post, user: user, content: "yo") }
+    let!(:post2) { FactoryGirl.create(:post, user: user, content: "bitch!") }
+
+    before { visit user_path(user) }
 
     it {should have_content(user.name) }
     it { should have_title(user.name) }
     it { should have_selector('img[class="avatar"]')}
+    it { should have_content(post1.content) }
+    it { should have_content(post2.content) }
+    it { should have_content(user.posts.count) }
+    describe "posts" do
 
+    end
   end
 end
