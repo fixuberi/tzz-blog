@@ -8,5 +8,9 @@ describe "Statc pages" do
 
    it { should have_title "Tzz-blog" }
    it { should have_content "Tzz-blog" }
+
+   describe "for signed-in users" do
+
+   end
  end
 end

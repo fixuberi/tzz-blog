@@ -26,6 +26,10 @@ class User < ApplicationRecord
     File.join(Rails.root, 'app', 'assets', 'images', 'ruby.png')
   end
 
+  def feed
+    Post.where(user_id: id)
+  end
+
   private
 
     def create_remember_token

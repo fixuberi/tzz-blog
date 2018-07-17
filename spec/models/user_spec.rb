@@ -117,5 +117,17 @@ describe User do
        expect(Post.where(id: post.id)).to be_empty
      end
    end
+
+   describe "by status" do
+     let(:unfollowed_post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
+     it "should include user's posts" do
+       expect(subject.feed).to include older_post
+       expect(subject.feed).to include newer_post
+     end
+     it "should not include unfollowed posts" do
+     expect(subject.feed).not_to include unfollowed_post
+     end
+   end
  end
 end
+
