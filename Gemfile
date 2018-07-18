@@ -55,6 +55,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'sqlite3'
   gem 'guard-rspec', '~> 4.7', '>= 4.7.3'
+  gem 'geckodriver-helper', '~> 0.0.3'
 end
 
 group :development do

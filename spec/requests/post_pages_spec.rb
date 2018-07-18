@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Post pages" do
 
@@ -27,7 +27,21 @@ describe "Post pages" do
       before { fill_in 'post_content', with: "Lorem ipsum" }
       it "should create a post" do
         expect { click_button "Post" }.to change(Post, :count).by(1)
+        end
+      end
+    end
+
+  describe "post destruction" do
+    let!(:post) { FactoryGirl.create(:post, user: user) }
+    before {  visit root_path }
+
+    describe "as  correct user", js:true do
+      it { should have_link "delete" }
+      it "should delete post" do
+        expect {click_link "delete"}.to change(Post, :count).by(-1)
       end
     end
   end
 end
+
+
