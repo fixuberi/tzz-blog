@@ -60,8 +60,15 @@ describe "User pages" do
     it { should have_content(post1.content) }
     it { should have_content(post2.content) }
     it { should have_content(user.posts.count) }
-    describe "posts" do
 
+    describe "as incorrect user" do
+       let(:incorrect_user) { FactoryGirl.create(:user) }
+       before do
+         valid_signin(incorrect_user)
+         visit user_path(user)
+       end
+      it { should_not have_link "delete" }
+      it { should_not have_link"edit" }
     end
   end
 end
