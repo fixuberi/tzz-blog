@@ -43,20 +43,30 @@ describe "Post pages" do
     end
   end
 
-  describe "post editing" do
+  describe "post editing"  do
     let!(:post) { FactoryGirl.create(:post, user: user) }
     before { visit root_path }
 
     describe "as correct user" do
       it { should have_link "edit" }
-      it "should redirect to edit post page" do
-        expect {click_link "edit"}.to redirect_to(edit_post_path(post))
+
+      describe  "click 'edit' " do
+        subject(:click_edit) { click_link "edit" }
+        #before { click_link "edit" }
+        #it { expect(click_edit).to redirect_to(edit_post_path(post)) }
+        it "should redirect to post_edit_page" do
+          expect(click_edit).to redirect_to :controller => :posts_controller,
+                                            :action => :edit,
+                                            :id => post.id
+        end
+
       end
+
       describe "with valid content" do
-        let(:valid_content) { "a"*280 }
+        let(:valid_content) { "yo "*10 }
         before do
           fill_in 'post_content', with: valid_content
-          click_button "Edit post"
+          click_button "Post"
         end
 
         it "should update post" do
@@ -67,9 +77,12 @@ describe "Post pages" do
       describe "with empty content" do
         before do
           fill_in 'post_content', with: ''
-          click_button "Edit post"
+          click_button "Post"
         end
-        it { should have_selector }
+        it { should have_error_message "error" }
+        it "should not update" do
+          expect(Post.find(post.id).content).not_to be_empty
+        end
       end
     end
   end

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :signed_in_user
-  before_action :correct_user, only: :destroy
+  before_action :correct_user, only: [:destroy, :edit, :update]
 
   def create
     @post = current_user.posts.build(post_params)
@@ -17,6 +17,21 @@ class PostsController < ApplicationController
     Post.destroy(params[:id])
     flash[:success] = "Post deleted"
     redirect_to root_url
+  end
+
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  def update
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      redirect_to root_path
+      flash[:success] = "Post successfully edited"
+    else
+      render "edit"
+    end
   end
 
   private
