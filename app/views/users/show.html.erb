@@ -1,10 +1,9 @@
 <% provide(:title, @user.name) %>
   <%= image_tag avatar_for(@user), alt: @user.name, class:"avatar" %>
 <%= @user.name %>, <%= @user.email %>
-
 <div class="span8" >
   <% if @user.posts.any? %>
-  <h3> Posts (<%= @user.posts.count %>)</h3>
+  <h3> <%= pluralize(@user.posts.count, "post") %> </h3>
     <ol class="posts" >
       <%= render @posts %>
     </ol>

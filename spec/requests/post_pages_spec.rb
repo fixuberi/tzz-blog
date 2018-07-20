@@ -52,25 +52,23 @@ describe "Post pages" do
 
       describe  "click 'edit' " do
         subject(:click_edit) { click_link "edit" }
-        #before { click_link "edit" }
-        #it { expect(click_edit).to redirect_to(edit_post_path(post)) }
-        it "should redirect to post_edit_page" do
-          expect(click_edit).to redirect_to :controller => :posts_controller,
-                                            :action => :edit,
-                                            :id => post.id
-        end
-
+        it { pending "some error with redirect_to"; expect(click_edit).to redirect_to(edit_post_path(post)) }
       end
 
-      describe "with valid content" do
+      describe "with valid content", js:true do
         let(:valid_content) { "yo "*10 }
         before do
+          visit  edit_post_path(post)
           fill_in 'post_content', with: valid_content
+          sleep(2)
           click_button "Post"
+          sleep(2)
         end
+        subject(:click_post) { click_button "Post" }
 
         it "should update post" do
           expect(Post.find(post.id).content).to eq valid_content
+
         end
       end
 

@@ -54,8 +54,7 @@ describe "User pages" do
 
     before { visit user_path(user) }
 
-    it {should have_content(user.name) }
-    it { should have_title(user.name) }
+    it { should have_content(user.name) }
     it { should have_selector('img[class="avatar"]')}
     it { should have_content(post1.content) }
     it { should have_content(post2.content) }

@@ -4,5 +4,6 @@
   <span class="timestamp" >
     Posted <%= time_ago_in_words(post.created_at) %> ago.
   </span>
-  <%= render 'shared/post_delete_link', item: post %>
+  <%= render 'shared/post_delete_link', item: post %>|
+  <%= render 'shared/post_edit_link', item:post %>
 </li>
