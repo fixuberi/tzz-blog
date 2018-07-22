@@ -6,11 +6,17 @@ def valid_signin(user)
   click_button "Sign in"
 end
 
+def make_post_with(content)
+  fill_in 'post_content', with: content
+  click_button "Post"
+end
+
 RSpec::Matchers.define :have_error_message do |message|
   match do |page|
     expect(page).to have_selector('div.alert.alert-danger', text: message)
   end
-
-
-
 end
+
+
+
+
